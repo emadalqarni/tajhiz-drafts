@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسودة لوحة المورد | منصة التجهيز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     مسودة لوحة المورد — نفس نظام التصميم الزجاجي
+     (Premium Glassmorphism) على هوية منصة التجهيز
+     ============================================================ */
+  :root{
+    --canvas:#0F172A;
+    --blue:#667EEA;
+    --purple:#A78BFA;
+    --cyan:#22D3EE;
+
+    --glass:rgba(255,255,255,.08);
+    --glass-strong:rgba(255,255,255,.12);
+    --glass-border:rgba(255,255,255,.14);
+
+    --data-surface:rgba(15,23,42,.92);
+
+    --brand:#D9480F;
+    --brand-2:#EA580C;
+    --gold:#F59E0B;
+
+    --text:#F1F5F9;
+    --text-2:#A9BDD6;
+    --text-3:#6E85A6;
+
+    --success:#34D399;
+    --success-soft:rgba(52,211,153,.14);
+    --amber:#FBBF24;
+    --amber-soft:rgba(251,191,36,.14);
+    --danger:#F87171;
+    --danger-soft:rgba(248,113,113,.14);
+    --info:#38BDF8;
+    --info-soft:rgba(56,189,248,.14);
+
+    --r:16px;
+    --r-lg:22px;
+    --shadow-glass:0 8px 32px rgba(0,0,0,.35);
+    --blur:blur(16px) saturate(150%);
+
+    --font-arabic:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+    --font-display:"Plus Jakarta Sans","IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+    --font-mono:"IBM Plex Mono",Consolas,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    min-height:100vh;
+    color:var(--text);
+    font-family:var(--font-arabic);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 520px at 92% -8%,rgba(102,126,234,.34),transparent 62%),
+      radial-gradient(820px 520px at 2% 26%,rgba(167,139,250,.22),transparent 60%),
+      radial-gradient(700px 480px at 6% 108%,rgba(34,211,238,.16),transparent 60%),
+      radial-gradient(760px 420px at 98% 92%,rgba(217,72,15,.16),transparent 62%),
+      linear-gradient(180deg,#0F172A 0%,#0B1426 100%);
+    background-attachment:fixed;
+  }
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+
+  .draftBar{
+    position:relative;z-index:60;
+    background:linear-gradient(90deg,rgba(217,72,15,.35),rgba(245,158,11,.22));
+    border-bottom:1px solid var(--glass-border);
+    color:#FDE5D8;font-size:12.5px;font-weight:500;text-align:center;
+    padding:7px 16px;backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  }
+  .draftBar b{color:#fff}
+
+  .layout{display:grid;grid-template-columns:252px 1fr;min-height:100vh}
+  @media(max-width:1024px){.layout{grid-template-columns:72px 1fr}}
+
+  /* ===== الشريط الجانبي ===== */
+  .sidebar{
+    position:sticky;top:0;height:100vh;
+    display:flex;flex-direction:column;gap:10px;
+    padding:22px 16px;
+    background:var(--glass-strong);
+    border-left:1px solid var(--glass-border);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    z-index:40;
+  }
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 18px}
+  .brandTile{
+    width:38px;height:38px;border-radius:12px;flex:none;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));
+    color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px;
+    box-shadow:0 6px 18px -6px rgba(217,72,15,.7);
+  }
+  .brand span{font-weight:700;font-size:16px}
+  .brand small{display:block;color:var(--text-3);font-size:11px;font-weight:500}
+  .sideLabel{font-size:10.5px;color:var(--text-3);padding:10px 10px 6px;font-weight:600;letter-spacing:.4px}
+  .sideNav{display:flex;flex-direction:column;gap:4px}
+  .sideItem{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 12px;border-radius:12px;
+    color:var(--text-2);font-size:14px;font-weight:500;
+    border:1px solid transparent;
+    transition:background .15s,color .15s;
+  }
+  .sideItem:hover{background:rgba(255,255,255,.06);color:#fff}
+  .sideItem.active{
+    background:linear-gradient(90deg,rgba(217,72,15,.22),rgba(217,72,15,.08));
+    color:#fff;border-color:rgba(217,72,15,.4);
+    box-shadow:inset 3px 0 0 var(--brand);
+  }
+  .sideItem .ico{flex:none;opacity:.85}
+  .sideItem .badge{
+    margin-right:auto;background:var(--info-soft);color:var(--info);
+    font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;
+  }
+  .sideBottom{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+  .userChip{
+    display:flex;align-items:center;gap:10px;
+    padding:10px;border-radius:14px;border:1px solid var(--glass-border);
+    background:rgba(255,255,255,.06);
+  }
+  .avatar{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#334475,#1E2A4A);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+  .userChip b{font-size:13px;display:block}
+  .userChip small{color:var(--text-3);font-size:11px}
+  @media(max-width:1024px){
+    .sidebar{padding:22px 10px}
+    .sidebar .brand span,.sidebar .brand small,.sideLabel,.sideItem span,.sideItem .badge,.userChip div{display:none}
+    .sideItem{justify-content:center;padding:12px}
+    .userChip{justify-content:center;padding:8px}
+  }
+
+  /* ===== المحتوى ===== */
+  .main{padding:26px 30px 40px;min-width:0}
+  @media(max-width:640px){.main{padding:18px 14px 32px}}
+
+  .topbar{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    padding:14px 18px;border-radius:var(--r-lg);
+    background:var(--glass);border:1px solid var(--glass-border);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    box-shadow:var(--shadow-glass);
+    margin-bottom:24px;
+  }
+  .greeting h1{font-family:var(--font-display);font-size:19px;font-weight:700}
+  .greeting p{color:var(--text-2);font-size:13px}
+  .search{
+    display:flex;align-items:center;gap:10px;flex:1;min-width:220px;
+    background:rgba(255,255,255,.07);border:1px solid var(--glass-border);
+    border-radius:12px;padding:10px 14px;color:var(--text-3);
+  }
+  .search input{flex:1;background:none;border:0;color:#fff;font:inherit;font-size:13.5px;outline:0}
+  .search input::placeholder{color:var(--text-3)}
+  .kbd{font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,.1);border:1px solid var(--glass-border);border-radius:6px;padding:2px 7px;color:var(--text-2)}
+  .rangePill{
+    display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-2);
+    background:rgba(255,255,255,.07);border:1px solid var(--glass-border);
+    padding:9px 14px;border-radius:12px;font-weight:500;
+  }
+  .iconBtn{
+    position:relative;width:40px;height:40px;border-radius:12px;flex:none;
+    display:grid;place-items:center;color:var(--text-2);
+    background:rgba(255,255,255,.07);border:1px solid var(--glass-border);cursor:pointer;transition:background .15s;
+  }
+  .iconBtn:hover{background:rgba(255,255,255,.12);color:#fff}
+  .iconBtn .dot{position:absolute;top:9px;left:10px;width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px rgba(217,72,15,.3)}
+  .topAvatar{display:flex;align-items:center;gap:10px;padding:5px 14px 5px 6px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--glass-border)}
+  .topAvatar b{font-size:13px}
+  .topAvatar .avatar{width:32px;height:32px;border-radius:9px}
+
+  /* ===== KPI ===== */
+  .kpiGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  @media(max-width:1200px){.kpiGrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.kpiGrid{grid-template-columns:1fr}}
+  .kpiCard{
+    padding:20px;border-radius:var(--r-lg);
+    background:var(--glass);border:1px solid var(--glass-border);
+    backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+    box-shadow:var(--shadow-glass);
+    animation:rise .55s cubic-bezier(.2,.8,.25,1) both;
+    animation-delay:calc(var(--i)*.08s);
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  .kpiTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .kpiChip{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none}
+  .kpiChip.orange{background:rgba(217,72,15,.16);color:var(--brand-2)}
+  .kpiChip.gold{background:rgba(245,158,11,.16);color:var(--gold)}
+  .kpiChip.cyan{background:rgba(56,189,248,.14);color:var(--info)}
+  .kpiChip.green{background:var(--success-soft);color:var(--success)}
+  .trend{
+    display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;
+    padding:3px 9px;border-radius:99px;
+  }
+  .trend.up{background:var(--success-soft);color:var(--success)}
+  .trend.warn{background:var(--amber-soft);color:var(--amber)}
+  .kpiLabel{color:var(--text-2);font-size:13px;margin-bottom:4px}
+  .kpiValue{font-family:var(--font-display);font-weight:800;font-size:26px;letter-spacing:-.5px}
+  .kpiValue small{font-size:13px;color:var(--text-3);font-weight:600}
+  .spark{margin-top:12px}
+
+  /* ===== البنتو ===== */
+  .row{display:grid;gap:16px;margin-bottom:16px}
+  .row.charts{grid-template-columns:1.9fr 1fr}
+  .row.bottom{grid-template-columns:1.9fr 1fr}
+  @media(max-width:1024px){.row.charts,.row.bottom{grid-template-columns:1fr}}
+
+  .panel{
+    border-radius:var(--r-lg);
+    background:var(--data-surface);
+    border:1px solid var(--glass-border);
+    box-shadow:var(--shadow-glass);
+    overflow:hidden;
+  }
+  .panelHead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px 0;flex-wrap:wrap}
+  .panelHead h3{font-size:15.5px;font-weight:700}
+  .panelHead p{color:var(--text-3);font-size:12.5px}
+  .segTabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--glass-border);border-radius:11px;padding:3px}
+  .segTab{padding:5px 13px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--text-2);cursor:pointer;transition:background .15s,color .15s}
+  .segTab.active{background:rgba(217,72,15,.25);color:#FFD8C2}
+  .legend{display:flex;gap:16px;font-size:12.5px;color:var(--text-2);flex-wrap:wrap}
+  .legend .sw{display:inline-flex;align-items:center;gap:7px}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  .chartBox{padding:14px 10px 10px}
+  .chartBox svg{width:100%;height:auto}
+  .areaLabel{font:600 11.5px var(--font-arabic);fill:var(--text-3)}
+  .gridLine{stroke:rgba(255,255,255,.06);stroke-width:1}
+  .endDot{animation:pulse 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+  .donutWrap{display:flex;align-items:center;gap:22px;padding:18px 22px 22px;flex-wrap:wrap}
+  .donutLegend{display:flex;flex-direction:column;gap:11px;flex:1;min-width:150px}
+  .donutLegend .rowL{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px}
+  .donutLegend .rowL .lbl{display:flex;align-items:center;gap:8px;color:var(--text-2)}
+  .donutLegend .rowL i{width:9px;height:9px;border-radius:3px}
+  .donutLegend .rowL b{font-family:var(--font-mono);font-size:12.5px}
+  .donutLegend .bar{height:5px;border-radius:99px;background:rgba(255,255,255,.07);margin-top:5px;overflow:hidden}
+  .donutLegend .bar i{display:block;height:100%;border-radius:99px;width:0;animation:fillBar 1s .4s ease both}
+  @keyframes fillBar{from{width:0}}
+
+  /* ===== الجدول + الملف التجاري ===== */
+  .tableWrap{padding:14px 12px 12px;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:600px}
+  th{font-size:11.5px;color:var(--text-3);font-weight:600;text-align:right;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+  td{padding:13px 14px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.05)}
+  tr:last-child td{border-bottom:0}
+  tr:hover td{background:rgba(255,255,255,.03)}
+  .supCell{display:flex;align-items:center;gap:10px}
+  .supInit{width:32px;height:32px;border-radius:9px;background:#1E2A4A;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+  .supCell b{font-size:13px;display:block}
+  .supCell small{color:var(--text-3);font-size:11.5px}
+  .amt{font-family:var(--font-mono);font-weight:600}
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:99px}
+  .status::before{content:"";width:6px;height:6px;border-radius:50%}
+  .status.new{background:var(--info-soft);color:var(--info)}
+  .status.new::before{background:var(--info)}
+  .status.review{background:var(--amber-soft);color:var(--amber)}
+  .status.review::before{background:var(--amber)}
+  .status.ok{background:var(--success-soft);color:var(--success)}
+  .status.ok::before{background:var(--success)}
+  .status.no{background:var(--danger-soft);color:var(--danger)}
+  .status.no::before{background:var(--danger)}
+  .miniBtn{
+    border:1px solid var(--glass-border);background:rgba(255,255,255,.06);color:var(--text-2);
+    font:600 12px var(--font-arabic);padding:5px 12px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s;
+  }
+  .miniBtn:hover{background:rgba(255,255,255,.14);color:#fff}
+  .miniBtn.primary{background:rgba(217,72,15,.18);border-color:rgba(217,72,15,.4);color:#FFD8C2}
+  .miniBtn.primary:hover{background:rgba(217,72,15,.3)}
+  .linkAll{font-size:12.5px;color:var(--brand-2);font-weight:700}
+
+  /* الملف التجاري */
+  .prof{padding:16px 22px 22px}
+  .profGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+  @media(max-width:480px){.profGrid{grid-template-columns:1fr}}
+  .profItem{border:1px solid var(--glass-border);background:rgba(255,255,255,.04);border-radius:14px;padding:13px 16px}
+  .profItem .l{font-size:11.5px;color:var(--text-3);display:flex;align-items:center;gap:6px}
+  .profItem .v{font-size:16px;font-weight:800;margin-top:3px;display:flex;align-items:center;gap:7px}
+  .profItem .v .okBadge{font-size:11px;font-weight:700;color:var(--success);background:var(--success-soft);padding:2px 9px;border-radius:99px}
+  .stars{color:var(--gold);letter-spacing:2px;font-size:14px}
+  .subTitle{font-size:12.5px;font-weight:700;color:var(--text-2);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .feed{display:flex;flex-direction:column}
+  .feedItem{display:flex;gap:13px;padding:12px 0;border-bottom:1px dashed rgba(255,255,255,.08)}
+  .feedItem:last-child{border-bottom:0}
+  .feedIco{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none}
+  .feedIco.gold{background:rgba(245,158,11,.16);color:var(--gold)}
+  .feedIco.green{background:var(--success-soft);color:var(--success)}
+  .feedIco.cyan{background:var(--info-soft);color:var(--info)}
+  .feedItem p{font-size:13px;color:var(--text-2);line-height:1.6}
+  .feedItem b{color:#fff;font-weight:600}
+  .feedItem time{display:block;font-size:11px;color:var(--text-3);margin-top:2px}
+
+  .alertStrip{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    margin-bottom:16px;padding:13px 18px;border-radius:var(--r);
+    background:linear-gradient(90deg,rgba(56,189,248,.16),rgba(102,126,234,.07));
+    border:1px solid rgba(56,189,248,.32);font-size:13.5px;color:var(--text-2);
+    animation:rise .5s ease both;
+  }
+  .alertStrip b{color:#fff}
+  .alertStrip .go{margin-right:auto;color:var(--info);font-weight:700;font-size:13px}
+
+  .main{animation:fade .6s ease both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .sidebar{background:rgba(17,27,51,.97)}
+    .topbar,.kpiCard{background:rgba(17,27,51,.95)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== شريط تنبيه المسودة ===== -->
+<div class="draftBar">📋 <b>مسودة لوحة المورد للاستعراض</b> — لم تُطبَّق على المنصة. نراجعها معًا قبل التنفيذ.</div>
+
+<div class="layout">
+
+  <!-- ===== الشريط الجانبي ===== -->
+  <aside class="sidebar">
+    <a class="brand" href="#">
+      <b class="brandTile">ت</b>
+      <span>منصة التجهيز<small>بوابة المورد</small></span>
+    </a>
+
+    <div class="sideLabel">الرئيسية</div>
+    <nav class="sideNav">
+      <a class="sideItem active" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>نظرة عامة</span>
+      </a>
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>طلبات الأسعار</span>
+        <b class="badge">4</b>
+      </a>
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span>العروض المرسلة</span>
+      </a>
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/><path d="M20 6H9"/><path d="M20 6v11"/></svg>
+        <span>الترسيات والعقود</span>
+      </a>
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg>
+        <span>ملفي التجاري</span>
+      </a>
+    </nav>
+
+    <div class="sideLabel">الإدارة</div>
+    <nav class="sideNav">
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        <span>التقارير</span>
+      </a>
+      <a class="sideItem" href="#">
+        <svg class="ico" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1h.09a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>الإعدادات</span>
+      </a>
+    </nav>
+
+    <div class="sideBottom">
+      <div class="userChip">
+        <div class="avatar">خ</div>
+        <div><b>خالد الحربي</b><small>مورّد معتمد — معدات البار</small></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== المحتوى ===== -->
+  <main class="main">
+
+    <!-- الشريط العلوي -->
+    <div class="topbar">
+      <div class="greeting">
+        <h1>مساء الخير، خالد 👋</h1>
+        <p>نظرة على محفظة عروضك — آخر تحديث قبل 20 دقيقة</p>
+      </div>
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input placeholder="ابحث عن طلبات، عروض، عقود…" />
+        <span class="kbd">/</span>
+      </div>
+      <div class="rangePill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        آخر 30 يومًا
+      </div>
+      <button class="iconBtn">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="dot"></span>
+      </button>
+      <div class="topAvatar">
+        <div class="avatar">خ</div>
+        <b>خالد</b>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3)"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- تنبيه المورد -->
+    <div class="alertStrip">
+      <span style="font-size:16px">📩</span>
+      <span><b>4 طلبات أسعار جديدة</b> بانتظار ردك — مهلة 3 منها تنتهي خلال 48 ساعة.</span>
+      <a class="go" href="#">استعراض الطلبات ←</a>
+    </div>
+
+    <!-- ===== مؤشرات KPI ===== -->
+    <div class="kpiGrid">
+      <div class="kpiCard" style="--i:1">
+        <div class="kpiTop">
+          <span class="kpiChip orange">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <span class="trend warn">+4 جديدة</span>
+        </div>
+        <div class="kpiLabel">طلبات أسعار واردة</div>
+        <div class="kpiValue num">14<small> طلب</small></div>
+        <svg class="spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+          <path d="M0,24 C12,23 20,25 32,21 C44,17 52,19 64,15 C76,11 86,13 96,9 C106,6 112,7 120,5" fill="none" stroke="#EA580C" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="kpiCard" style="--i:2">
+        <div class="kpiTop">
+          <span class="kpiChip gold">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </span>
+          <span class="trend up">+6 هذا الشهر</span>
+        </div>
+        <div class="kpiLabel">عروض مرسلة</div>
+        <div class="kpiValue num">31<small> عرض</small></div>
+        <svg class="spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+          <path d="M0,20 C12,18 22,19 34,15 C46,11 56,13 68,9 C80,5 92,7 104,4 C110,3 116,3 120,2" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="kpiCard" style="--i:3">
+        <div class="kpiTop">
+          <span class="kpiChip cyan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </span>
+          <span class="trend up">▲ 18%</span>
+        </div>
+        <div class="kpiLabel">قيمة العروض المرسلة</div>
+        <div class="kpiValue num">2.4M<small> ر.س</small></div>
+        <svg class="spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+          <path d="M0,25 C10,23 18,24 30,19 C42,14 50,17 62,10 C74,5 84,8 96,4 C106,2 112,3 120,2" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="kpiCard" style="--i:4">
+        <div class="kpiTop">
+          <span class="kpiChip green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21 1.18.54 2.03 2.03 2.03 3.79"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+          </span>
+          <span class="trend up">▲ 6%</span>
+        </div>
+        <div class="kpiLabel">معدل الفوز بالعروض</div>
+        <div class="kpiValue num">38<small>%</small></div>
+        <svg class="spark" width="100%" height="28" viewBox="0 0 120 28" preserveAspectRatio="none">
+          <path d="M0,18 C12,19 22,15 34,16 C46,17 56,12 68,10 C80,8 90,8 102,6 C108,5 114,5 120,4" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ===== صف الرسوم: أداء العروض + القطاعات ===== -->
+    <div class="row charts">
+
+      <div class="panel">
+        <div class="panelHead">
+          <div>
+            <h3>أداء العروض</h3>
+            <p>قيمة العروض المرسلة مقابل قيمة الترسيات (آلاف ر.س)</p>
+          </div>
+          <div class="segTabs">
+            <span class="segTab">سنوي</span>
+            <span class="segTab">ربع سنوي</span>
+            <span class="segTab active">شهري</span>
+          </div>
+        </div>
+        <div class="chartBox">
+          <svg viewBox="0 0 800 300" role="img" aria-label="أداء العروض">
+            <defs>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#F59E0B" stop-opacity=".4"/>
+                <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="areaGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#667EEA" stop-opacity=".28"/>
+                <stop offset="1" stop-color="#667EEA" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="dotGlow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <g class="gridLine">
+              <line x1="0" y1="40" x2="800" y2="40"/>
+              <line x1="0" y1="92" x2="800" y2="92"/>
+              <line x1="0" y1="144" x2="800" y2="144"/>
+              <line x1="0" y1="196" x2="800" y2="196"/>
+              <line x1="0" y1="248" x2="800" y2="248"/>
+              <line x1="0" y1="300" x2="800" y2="300"/>
+            </g>
+
+            <g class="areaLabel">
+              <text x="0" y="26">300</text><text x="0" y="78">240</text>
+              <text x="0" y="130">180</text><text x="0" y="182">120</text>
+              <text x="0" y="234">60</text><text x="0" y="286">0</text>
+              <g text-anchor="middle" fill="#6E85A6">
+                <text x="40" y="320">يوليو</text>
+                <text x="170" y="320">أغسطس</text>
+                <text x="300" y="320">سبتمبر</text>
+                <text x="430" y="320">أكتوبر</text>
+                <text x="560" y="320">نوفمبر</text>
+                <text x="690" y="320">ديسمبر</text>
+              </g>
+            </g>
+
+            <!-- قيمة الترسيات (متقطع) -->
+            <path d="M0,265 C55,260 105,256 160,252 C230,248 270,243 320,231 C380,218 425,214 480,205 C530,196 565,185 640,170 C700,156 745,147 800,135 L800,300 L0,300 Z" fill="url(#areaGrad2)"/>
+            <path d="M0,265 C55,260 105,256 160,252 C230,248 270,243 320,231 C380,218 425,214 480,205 C530,196 565,185 640,170 C700,156 745,147 800,135"
+                  fill="none" stroke="#667EEA" stroke-width="2.4" stroke-dasharray="7 7" stroke-linecap="round" opacity=".9"/>
+            <circle cx="800" cy="135" r="5" fill="#667EEA" opacity=".9"/>
+
+            <!-- قيمة العروض المرسلة (الخط الرئيسي) -->
+            <path d="M0,239 C55,234 105,223 160,213 C230,201 270,191 320,170 C380,147 425,148 480,135 C530,124 565,113 640,101 C700,90 745,78 800,66 L800,300 L0,300 Z" fill="url(#areaGrad)"/>
+            <path d="M0,239 C55,234 105,223 160,213 C230,201 270,191 320,170 C380,147 425,148 480,135 C530,124 565,113 640,101 C700,90 745,78 800,66"
+                  fill="none" stroke="#F59E0B" stroke-width="3.4" stroke-linecap="round"/>
+
+            <circle class="endDot" cx="800" cy="66" r="7" fill="#FBBF24" filter="url(#dotGlow)" stroke="#fff" stroke-width="2"/>
+            <circle cx="800" cy="66" r="2.6" fill="#fff"/>
+          </svg>
+        </div>
+        <div style="padding:8px 26px 18px">
+          <div class="legend">
+            <span class="sw"><i style="background:var(--gold)"></i> قيمة العروض المرسلة</span>
+            <span class="sw"><i style="background:var(--blue)"></i> قيمة الترسيات</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- القطاعات -->
+      <div class="panel">
+        <div class="panelHead">
+          <div>
+            <h3>الطلبات حسب القطاع</h3>
+            <p>توزيع طلبات الأسعار الواردة</p>
+          </div>
+        </div>
+        <div class="donutWrap">
+          <div style="position:relative;flex:none">
+            <svg width="150" height="150" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="13"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="#EA580C" stroke-width="13" stroke-dasharray="165.9 276.5" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="#F59E0B" stroke-width="13" stroke-dasharray="77.4 276.5" stroke-dashoffset="-165.9" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="44" fill="none" stroke="#38BDF8" stroke-width="13" stroke-dasharray="33.2 276.5" stroke-dashoffset="-243.3" transform="rotate(-90 60 60)"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center">
+              <div><div class="num" style="font-family:var(--font-display);font-weight:800;font-size:18px">14</div><div style="color:var(--text-3);font-size:11px">طلبًا واردًا</div></div>
+            </div>
+          </div>
+          <div class="donutLegend">
+            <div>
+              <div class="rowL"><span class="lbl"><i style="background:#EA580C"></i> ☕ الكافيهات</span><b class="num">60%</b></div>
+              <div class="bar"><i style="width:60%;background:#EA580C"></i></div>
+            </div>
+            <div>
+              <div class="rowL"><span class="lbl"><i style="background:#F59E0B"></i> 🍽 المطاعم</span><b class="num">28%</b></div>
+              <div class="bar"><i style="width:28%;background:#F59E0B"></i></div>
+            </div>
+            <div>
+              <div class="rowL"><span class="lbl"><i style="background:#38BDF8"></i> 🥐 المخابز</span><b class="num">12%</b></div>
+              <div class="bar"><i style="width:12%;background:#38BDF8"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== الصف السفلي: الطلبات الواردة + الملف التجاري ===== -->
+    <div class="row bottom">
+
+      <div class="panel">
+        <div class="panelHead">
+          <div>
+            <h3>طلبات الأسعار الواردة</h3>
+            <p>طلبات موحّدة بمواصفات واضحة جاهزة للرد</p>
+          </div>
+          <a class="linkAll" href="#">جميع الطلبات ←</a>
+        </div>
+        <div class="tableWrap">
+          <table>
+            <thead>
+              <tr><th>المشروع</th><th>القطاع</th><th>المهلة</th><th>التاريخ</th><th>الحالة</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="supCell"><span class="supInit">م</span><div><b>مقهى روّاد</b><small>الرياض</small></div></div></td>
+                <td><span style="font-size:12.5px">☕ كافيهات</span></td>
+                <td style="color:var(--danger);font-size:12.5px;font-weight:600">تنتهي خلال 48 ساعة</td>
+                <td style="color:var(--text-3)">اليوم</td>
+                <td><span class="status new">جديد</span></td>
+                <td><button class="miniBtn primary">تقديم عرض</button></td>
+              </tr>
+              <tr>
+                <td><div class="supCell"><span class="supInit">ل</span><div><b>مطعم لمسة</b><small>جدة</small></div></div></td>
+                <td><span style="font-size:12.5px">🍽 مطاعم</span></td>
+                <td style="color:var(--text-2)">3 أيام متبقية</td>
+                <td style="color:var(--text-3)">أمس</td>
+                <td><span class="status new">جديد</span></td>
+                <td><button class="miniBtn primary">تقديم عرض</button></td>
+              </tr>
+              <tr>
+                <td><div class="supCell"><span class="supInit">أ</span><div><b>كافيه أوتاد</b><small>الدمام</small></div></div></td>
+                <td><span style="font-size:12.5px">☕ كافيهات</span></td>
+                <td style="color:var(--text-2)">—</td>
+                <td style="color:var(--text-3)">أمس</td>
+                <td><span class="status review">قيد المراجعة</span></td>
+                <td><button class="miniBtn">عرض العرض</button></td>
+              </tr>
+              <tr>
+                <td><div class="supCell"><span class="supInit">س</span><div><b>مخبز سحاب</b><small>الرياض</small></div></div></td>
+                <td><span style="font-size:12.5px">🥐 مخابز</span></td>
+                <td style="color:var(--text-2)">انتهت</td>
+                <td style="color:var(--text-3)">20 سبتمبر</td>
+                <td><span class="status ok">مقبول</span></td>
+                <td><button class="miniBtn">تفاصيل</button></td>
+              </tr>
+              <tr>
+                <td><div class="supCell"><span class="supInit">ص</span><div><b>مطعم صحن</b><small>جدة</small></div></div></td>
+                <td><span style="font-size:12.5px">🍽 مطاعم</span></td>
+                <td style="color:var(--text-2)">انتهت</td>
+                <td style="color:var(--text-3)">18 سبتمبر</td>
+                <td><span class="status no">مرفوض</span></td>
+                <td><button class="miniBtn">تفاصيل</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- الملف التجاري -->
+      <div class="panel">
+        <div class="panelHead" style="padding-bottom:6px">
+          <div>
+            <h3>الملف التجاري والتقييم</h3>
+            <p>حالة اعتمادك لدى المنصة</p>
+          </div>
+        </div>
+        <div class="prof">
+          <div class="profGrid">
+            <div class="profItem">
+              <span class="l">حالة الاعتماد</span>
+              <div class="v"><span style="color:var(--success)">✓</span> معتمد <span class="okBadge">صالح 12 شهرًا</span></div>
+            </div>
+            <div class="profItem">
+              <span class="l">التقييم العام</span>
+              <div class="v"><span class="stars">★★★★★</span> <span class="num">4.8</span></div>
+            </div>
+            <div class="profItem">
+              <span class="l">معدل الفوز بالعروض</span>
+              <div class="v"><span class="num">38%</span></div>
+            </div>
+            <div class="profItem">
+              <span class="l">متوسط زمن الرد</span>
+              <div class="v"><span class="num">1.2</span> <small style="color:var(--text-3);font-size:12px">يوم</small></div>
+            </div>
+          </div>
+
+          <div class="subTitle">🏆 آخر الترسيات</div>
+          <div class="feed">
+            <div class="feedItem">
+              <span class="feedIco gold">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div><p><b>مطعم لمسة</b> — تجهيزات MEP <span class="amt num" style="color:var(--gold)">96,000 ر.س</span></p><time>12 سبتمبر</time></div>
+            </div>
+            <div class="feedItem">
+              <span class="feedIco green">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div><p><b>مقهى روّاد</b> — معدات البار <span class="amt num" style="color:var(--success)">42,800 ر.س</span></p><time>8 سبتمبر</time></div>
+            </div>
+            <div class="feedItem">
+              <span class="feedIco cyan">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div><p><b>مخبز سحاب</b> — خطوط الأفران <span class="amt num" style="color:var(--info)">118,000 ر.س</span></p><time>1 سبتمبر</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.segTab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tab.parentElement.querySelectorAll('.segTab').forEach(function(t){t.classList.remove('active')});
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
