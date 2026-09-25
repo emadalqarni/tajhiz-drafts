@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسودة — الصفحة الرئيسية | منصة التجهيز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     مسودة تصميم — منصة التجهيز
+     غيّر القيم هنا لتعديل الهوية (الألوان، الخطوط، الزوايا)
+     ============================================================ */
+  :root{
+    /* الألوان الأساسية */
+    --ink:#0B1C30;          /* الأزرق الداكن — العناوين */
+    --ink-2:#1E293B;        /* درجة أغمق للخلفيات */
+    --slate:#0F172A;        /* خلفية الأقسام الداكنة */
+    --slate-2:#16233A;
+    --muted:#5B6577;        /* النصوص الثانوية */
+    --brand:#D9480F;        /* برتقالي العلامة */
+    --brand-2:#C2410C;
+    --brand-3:#9A3412;
+    --amber:#E8590C;
+    --gold:#F59E0B;         /* لمسات ذهبية */
+    --canvas:#F8FAFC;       /* خلفية الصفحة */
+    --cream:#F1F5F9;
+    --line:#E2E8F0;
+    --white:#fff;
+    --success:#059669;
+    --success-soft:#ECFDF5;
+    --success-text:#065F46;
+    --danger-soft:#FEF2F2;
+    --danger-text:#991B1B;
+
+    /* الخطوط */
+    --font-arabic:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+    --font-display:"Plus Jakarta Sans","IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+
+    /* الزوايا والظلال */
+    --r:14px;
+    --r-lg:20px;
+    --shadow-1:0 1px 2px rgba(15,23,42,.05);
+    --shadow-2:0 6px 18px -6px rgba(15,23,42,.12);
+    --shadow-3:0 18px 40px -18px rgba(15,23,42,.25);
+    --ring:0 0 0 3px rgba(217,72,15,.18);
+
+    --container:1160px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:var(--font-arabic);
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(217,72,15,.18)}
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block}
+  .container{max-width:var(--container);margin:0 auto;padding:0 24px}
+
+  /* ===== شريط التنبيه: مسودة ===== */
+  .draftBar{
+    background:linear-gradient(90deg,#7C2D12,#9A3412);
+    color:#FEE2D5;font-size:13px;font-weight:500;text-align:center;
+    padding:8px 16px;letter-spacing:.2px;
+  }
+  .draftBar b{color:#fff}
+
+  /* ===== الشريط العلوي ===== */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(248,250,252,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navInner{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+  .brandTile{
+    width:36px;height:36px;border-radius:10px;flex:none;
+    background:linear-gradient(135deg,var(--brand),var(--brand-3));
+    color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;
+    box-shadow:0 4px 10px -4px rgba(217,72,15,.5);
+  }
+  .navLinks{display:flex;align-items:center;gap:28px;font-size:14.5px;color:var(--ink)}
+  .navLinks a{font-weight:500;transition:color .15s}
+  .navLinks a:hover{color:var(--brand)}
+  .navCta{
+    background:var(--brand);color:#fff;font-weight:700;
+    padding:9px 20px;border-radius:10px;transition:background .15s,transform .1s;
+  }
+  .navCta:hover{background:var(--brand-2)}
+  @media(max-width:760px){.navLinks a:not(.navCta){display:none}}
+
+  /* ===== البطل (Hero) ===== */
+  .hero{
+    position:relative;color:#fff;
+    background:
+      radial-gradient(1100px 500px at 85% -10%,rgba(217,72,15,.28),transparent 60%),
+      radial-gradient(900px 480px at 10% 110%,rgba(245,158,11,.14),transparent 60%),
+      linear-gradient(180deg,var(--slate) 0%,var(--ink-2) 100%);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:26px 26px;mask-image:linear-gradient(180deg,#000,transparent 75%);
+  }
+  .heroInner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding:88px 0 96px}
+  @media(max-width:960px){.heroInner{grid-template-columns:1fr;padding:56px 0 64px;gap:44px}}
+
+  .heroBadge{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);
+    padding:7px 14px;border-radius:999px;font-size:13.5px;color:#FDE5D8;margin-bottom:24px;
+  }
+  .heroBadge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(245,158,11,.18)}
+  .hero h1{
+    font-family:var(--font-display);font-size:clamp(34px,5vw,54px);
+    line-height:1.25;letter-spacing:-.5px;margin-bottom:20px;
+  }
+  .hero h1 em{
+    font-style:normal;color:var(--gold);
+    background:linear-gradient(90deg,var(--gold),var(--amber));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .heroSub{color:#BFD0E5;font-size:17.5px;max-width:52ch;margin-bottom:32px}
+  .heroActions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+  .btnPrimary{
+    display:inline-flex;align-items:center;gap:10px;background:var(--brand);
+    color:#fff;font-weight:700;font-size:15.5px;padding:14px 26px;border-radius:12px;
+    box-shadow:0 10px 24px -8px rgba(217,72,15,.65);transition:transform .12s,background .15s;
+  }
+  .btnPrimary:hover{background:var(--brand-2);transform:translateY(-2px)}
+  .btnGhost{
+    display:inline-flex;align-items:center;gap:8px;color:#E2E8F0;
+    font-weight:600;font-size:15px;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.25);
+    transition:border-color .15s,color .15s;
+  }
+  .btnGhost:hover{color:#fff;border-color:var(--gold)}
+  .heroProof{display:flex;gap:36px;flex-wrap:wrap}
+  .heroProof span{display:flex;flex-direction:column}
+  .heroProof b{font-family:var(--font-display);font-size:26px;color:#fff}
+  .heroProof small{color:#90A4BE;font-size:13px;margin-top:2px}
+
+  /* بطاقة المحاكاة داخل البطل */
+  .heroVisual{position:relative;min-height:420px}
+  .visualGlow{
+    position:absolute;inset:12% -6% 8% 6%;border-radius:40px;
+    background:radial-gradient(closest-side,rgba(217,72,15,.38),transparent);
+    filter:blur(8px);
+  }
+  .projectPreview{
+    position:relative;background:#fff;color:var(--ink);
+    border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow-3);
+    transform:rotate(-1.2deg);
+  }
+  .previewHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+  .previewHeader span{font-size:13px;color:var(--muted)}
+  .previewHeader b{font-size:13px;color:var(--success-text);background:var(--success-soft);padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .previewHeader b::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--success)}
+  .progressTrack{height:6px;background:var(--cream);border-radius:99px;margin-bottom:22px;overflow:hidden}
+  .progressFill{height:100%;width:34%;border-radius:99px;background:linear-gradient(90deg,var(--brand),var(--gold))}
+  .previewSteps{display:flex;flex-direction:column;gap:12px}
+  .previewStep{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--canvas)}
+  .previewStep.active{border-color:rgba(217,72,15,.4);background:#FFFAF7;box-shadow:var(--shadow-1)}
+  .stepNum{width:30px;height:30px;border-radius:9px;background:#E8EDF3;color:var(--muted);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+  .previewStep.active .stepNum{background:var(--brand);color:#fff}
+  .previewStep span{font-size:14px;font-weight:600;flex:1}
+  .previewStep em{font-style:normal;font-size:12px;font-weight:700;color:var(--brand)}
+  .previewStep.muted em{color:#94A3B8}
+
+  .floatingCard{
+    position:absolute;background:#fff;color:var(--ink);border-radius:14px;
+    padding:14px 18px;box-shadow:var(--shadow-3);display:flex;align-items:center;gap:12px;z-index:2;
+  }
+  .costCard{bottom:26px;right:-18px;flex-direction:column;align-items:flex-start;gap:2px;transform:rotate(2deg)}
+  .costCard b{font-size:15px}
+  .costCard small{color:var(--muted);font-size:12px}
+  .supplierCard{top:24px;left:-22px;transform:rotate(-2deg)}
+  .supplierCard .check{
+    width:34px;height:34px;border-radius:50%;background:var(--success-soft);color:var(--success);
+    display:grid;place-items:center;font-weight:800;flex:none;
+  }
+  .supplierCard b{font-size:14px;display:block}
+  .supplierCard small{color:var(--muted);font-size:11.5px}
+  @media(max-width:960px){
+    .costCard{right:6px}.supplierCard{left:6px}
+  }
+
+  /* ===== الأقسام العامة ===== */
+  section{padding:96px 0}
+  .sectionEyebrow{
+    display:inline-flex;align-items:center;gap:8px;color:var(--brand);
+    font-weight:700;font-size:13.5px;letter-spacing:.4px;margin-bottom:14px;
+  }
+  .sectionEyebrow::before{content:"";width:26px;height:2px;background:var(--brand);border-radius:2px}
+  .sectionTitle h2{font-family:var(--font-display);font-size:clamp(26px,3.4vw,38px);line-height:1.35;letter-spacing:-.4px;margin-bottom:14px}
+  .sectionTitle p{color:var(--muted);font-size:16.5px;max-width:60ch}
+  .sectionTitle.center{text-align:center;max-width:720px;margin:0 auto 56px}
+  .sectionTitle.center .sectionEyebrow::after{content:"";width:26px;height:2px;background:var(--brand);border-radius:2px}
+  .sectionTitle.center .sectionEyebrow::before{display:none}
+
+  /* ===== القسم: المشكلة ===== */
+  .problemSection{background:#fff;border-bottom:1px solid var(--line)}
+  .painGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:960px){.painGrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.painGrid{grid-template-columns:1fr}}
+  .painCard{
+    border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:28px 24px;background:var(--canvas);position:relative;overflow:hidden;
+    transition:transform .15s,box-shadow .15s;
+  }
+  .painCard:hover{transform:translateY(-4px);box-shadow:var(--shadow-2)}
+  .painCard .num{position:absolute;top:14px;left:18px;font-family:var(--font-display);font-size:44px;font-weight:800;color:#EDF1F6}
+  .painIcon{width:46px;height:46px;border-radius:12px;background:var(--danger-soft);color:var(--danger-text);display:grid;place-items:center;margin-bottom:18px}
+  .painCard h3{font-size:17px;margin-bottom:8px}
+  .painCard p{font-size:14.5px;color:var(--muted)}
+  .painCard .tag{
+    display:inline-block;margin-top:14px;font-size:12px;font-weight:600;
+    color:var(--danger-text);background:var(--danger-soft);
+    padding:3px 10px;border-radius:999px;
+  }
+
+  /* ===== القسم: الحل (قبل / بعد) ===== */
+  .solutionSection{background:var(--canvas)}
+  .compareWrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:72px}
+  @media(max-width:900px){.compareWrap{grid-template-columns:1fr}}
+  .compareCol{border-radius:var(--r-lg);padding:34px 30px;box-shadow:var(--shadow-2)}
+  .compareCol.before{background:#fff;border:1px solid var(--line)}
+  .compareCol.after{
+    background:linear-gradient(180deg,#0F1E33,#16233A);color:#fff;position:relative;overflow:hidden;
+  }
+  .compareCol.after::before{
+    content:"";position:absolute;top:-60px;left:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(217,72,15,.45),transparent);
+  }
+  .colBadge{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;padding:6px 14px;border-radius:999px;margin-bottom:22px}
+  .before .colBadge{background:#F1F5F9;color:var(--muted)}
+  .after .colBadge{background:rgba(217,72,15,.18);color:#FFD8C2}
+  .compareCol h3{font-size:22px;margin-bottom:6px}
+  .compareCol .colSub{font-size:14px;margin-bottom:24px}
+  .before .colSub{color:var(--muted)}
+  .after .colSub{color:#90A4BE}
+  .compareList{display:flex;flex-direction:column;gap:16px}
+  .compareItem{display:flex;gap:12px;align-items:flex-start;font-size:14.5px}
+  .compareItem .ico{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;margin-top:2px}
+  .before .compareItem .ico{background:#F1F5F9;color:var(--muted)}
+  .after .compareItem .ico{background:var(--success-soft);color:var(--success-text)}
+  .compareItem b{display:block;font-size:15px}
+  .before .compareItem b{color:var(--ink)}
+  .after .compareItem b{color:#fff}
+  .compareItem span{color:var(--muted)}
+  .after .compareItem span{color:#A9BDD6}
+
+  /* ركائز الحل */
+  .pillarsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:960px){.pillarsGrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.pillarsGrid{grid-template-columns:1fr}}
+  .pillar{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:30px 26px;position:relative;transition:transform .15s,box-shadow .15s,border-color .15s;
+  }
+  .pillar:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:rgba(217,72,15,.35)}
+  .pillar .pillarNum{
+    position:absolute;top:22px;left:22px;font-family:var(--font-display);
+    font-weight:800;font-size:15px;color:#fff;background:var(--brand);
+    width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  }
+  .pillarIcon{width:50px;height:50px;border-radius:14px;background:#FFE9DD;color:var(--brand);display:grid;place-items:center;margin-bottom:20px}
+  .pillar h3{font-size:17.5px;margin-bottom:8px}
+  .pillar p{font-size:14.5px;color:var(--muted)}
+
+  /* ===== القسم: الخصائص ===== */
+  .featuresSection{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .featureGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:960px){.featureGrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:620px){.featureGrid{grid-template-columns:1fr}}
+  .featureCard{border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 26px;transition:box-shadow .15s,transform .15s}
+  .featureCard:hover{box-shadow:var(--shadow-2);transform:translateY(-3px)}
+  .featureCard .fIcon{width:52px;height:52px;border-radius:14px;background:var(--cream);color:var(--ink);display:grid;place-items:center;margin-bottom:20px;transition:background .15s,color .15s}
+  .featureCard:hover .fIcon{background:var(--brand);color:#fff}
+  .featureCard h3{font-size:17.5px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .featureCard h3 .dots{font-size:11px;color:var(--gold);letter-spacing:2px}
+  .featureCard p{font-size:14.5px;color:var(--muted);margin-bottom:14px}
+
+  /* ===== القسم: التخصصات ===== */
+  .specialtySection{background:var(--canvas)}
+  .specialtyGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:960px){.specialtyGrid{grid-template-columns:1fr}}
+  .specialtyCard{
+    background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:32px 28px;transition:transform .15s,box-shadow .15s;
+  }
+  .specialtyCard:hover{transform:translateY(-5px);box-shadow:var(--shadow-2)}
+  .specialtyIcon{width:56px;height:56px;border-radius:16px;background:var(--cream);display:grid;place-items:center;font-size:26px;margin-bottom:20px}
+  .specialtyCard>span{font-size:13px;font-weight:700;color:var(--brand)}
+  .specialtyCard h3{font-size:20px;margin:6px 0 10px;font-family:var(--font-display)}
+  .specialtyCard>p{color:var(--muted);font-size:15px;margin-bottom:18px}
+  .specList{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:18px}
+  .specList li{display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:500}
+  .specList li::before{content:"✓";width:22px;height:22px;border-radius:7px;background:var(--success-soft);color:var(--success-text);display:grid;place-items:center;font-size:12px;font-weight:800;flex:none}
+
+  /* ===== القسم: كيف تعمل ===== */
+  .stepsSection{background:linear-gradient(180deg,var(--slate),var(--ink-2));color:#fff;position:relative;overflow:hidden}
+  .stepsSection::before{
+    content:"";position:absolute;top:-140px;right:-140px;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(217,72,15,.35),transparent);
+  }
+  .stepsSection .sectionTitle h2{color:#fff}
+  .stepsSection .sectionTitle p{color:#A9BDD6}
+  .stepsGrid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:64px}
+  @media(max-width:960px){.stepsGrid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.stepsGrid{grid-template-columns:1fr}}
+  .stepCard{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--r-lg);padding:30px 26px;position:relative;transition:background .15s,transform .15s;
+  }
+  .stepCard:hover{background:rgba(255,255,255,.09);transform:translateY(-4px)}
+  .stepCard .stepBadge{
+    width:44px;height:44px;border-radius:12px;background:var(--brand);color:#fff;
+    display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:16px;margin-bottom:22px;
+    box-shadow:0 8px 20px -6px rgba(217,72,15,.6);
+  }
+  .stepCard h3{font-size:17.5px;margin-bottom:8px;color:#fff}
+  .stepCard p{font-size:14.5px;color:#A9BDD6}
+
+  /* ===== شريط الأرقام ===== */
+  .statsBand{background:var(--slate);border-top:1px solid rgba(255,255,255,.08);color:#fff;padding:56px 0}
+  .statsInner{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;text-align:center}
+  @media(max-width:900px){.statsInner{grid-template-columns:1fr 1fr}}
+  .statsInner b{font-family:var(--font-display);font-size:40px;font-weight:800;display:block;line-height:1.1}
+  .statsInner b .plus{color:var(--gold)}
+  .statsInner span{color:#90A4BE;font-size:14.5px}
+
+  /* ===== الأسئلة الشائعة ===== */
+  .faqSection{background:#fff}
+  .faqList{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+  .faqItem{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--canvas)}
+  .faqQ{
+    width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;
+    background:none;border:0;padding:20px 24px;font-weight:700;font-size:16px;color:var(--ink);text-align:right;
+  }
+  .faqQ .chev{transition:transform .2s;color:var(--brand);flex:none}
+  .faqItem.open .chev{transform:rotate(180deg)}
+  .faqA{max-height:0;overflow:hidden;transition:max-height .25s ease}
+  .faqA p{padding:0 24px 20px;color:var(--muted);font-size:15px}
+
+  /* ===== الدعوة الأخيرة ===== */
+  .ctaSection{background:var(--canvas)}
+  .ctaCard{
+    position:relative;overflow:hidden;text-align:center;color:#fff;
+    background:radial-gradient(700px 300px at 50% -30%,rgba(217,72,15,.4),transparent 70%),linear-gradient(180deg,#12233B,#0B1C30);
+    border-radius:28px;padding:80px 40px;
+  }
+  .ctaCard h2{font-family:var(--font-display);font-size:clamp(28px,4vw,44px);margin:0 auto 16px;max-width:20ch}
+  .ctaCard p{color:#A9BDD6;font-size:17px;max-width:52ch;margin:0 auto 36px}
+  .ctaCard .btnPrimary{font-size:17px;padding:16px 34px}
+  .ctaNote{margin-top:18px;font-size:13.5px;color:#7E93AC}
+
+  /* ===== التذييل ===== */
+  .footer{background:var(--slate);color:#fff;padding:56px 0 40px}
+  .footerGrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:40px}
+  @media(max-width:760px){.footerGrid{grid-template-columns:1fr;gap:28px}}
+  .footer .brand{color:#fff}
+  .footer p{color:#90A4BE;font-size:14.5px;max-width:38ch;margin-top:14px}
+  .footer h4{font-size:15px;margin-bottom:16px;color:#fff}
+  .footerLinks{display:flex;flex-direction:column;gap:10px}
+  .footerLinks a{color:#A9BDD6;font-size:14.5px;transition:color .15s}
+  .footerLinks a:hover{color:var(--gold)}
+  .footerBottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:#7E93AC;font-size:13.5px}
+
+  /* حركات الظهور */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ===== شريط تنبيه المسودة ===== -->
+<div class="draftBar">
+  📋 <b>مسودة تصميم للاستعراض</b> — لم تُطبَّق على المنصة بعد. نراجعها معًا ثم ننفّذ النسخة المعتمدة.
+</div>
+
+<!-- ===== الشريط العلوي ===== -->
+<nav class="nav">
+  <div class="container navInner">
+    <a class="brand" href="#">
+      <b class="brandTile">ت</b>
+      <span>منصة التجهيز</span>
+    </a>
+    <div class="navLinks">
+      <a href="#problem">المشكلة</a>
+      <a href="#solution">الحل</a>
+      <a href="#features">الخصائص</a>
+      <a href="#specialties">تخصصاتنا</a>
+      <a href="#steps">كيف تعمل؟</a>
+      <a class="navCta" href="#">تسجيل الدخول</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     البطل (Hero)
+============================================================ -->
+<header class="hero">
+  <div class="container heroInner">
+    <div>
+      <span class="heroBadge">متخصصون في الكافيهات والمطاعم والمخابز — وليست منصة عامة</span>
+      <h1>من فكرتك الأولى<br><em>إلى افتتاح ناجح.</em></h1>
+      <p class="heroSub">
+        كل منصة عامة تسألك «ما اسم مشروعك؟» وتتركك وحدك.
+        نحن نبني منصة خصيصًا لقطاع الأغذية والمشروبات: أسئلة، حزم، وتجهيزات تتغير
+        حسب نوع مشروعك — من التخطيط حتى ترسية المورد.
+      </p>
+      <div class="heroActions">
+        <a class="btnPrimary" href="#">ابدأ تخطيط مشروعك مجانًا
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        </a>
+        <a class="btnGhost" href="#problem">اكتشف لماذا نحن مختلفون ↓</a>
+      </div>
+      <div class="heroProof">
+        <span><b>6</b><small>حزم تنفيذية جاهزة</small></span>
+        <span><b>3</b><small>قطاعات متخصصة</small></span>
+        <span><b>منصة واحدة</b><small>حتى الترسية</small></span>
+      </div>
+    </div>
+
+    <div class="heroVisual">
+      <div class="visualGlow"></div>
+      <article class="projectPreview">
+        <header class="previewHeader">
+          <span>مشروعك الجديد</span>
+          <b>جاهزية المشروع</b>
+        </header>
+        <div class="progressTrack"><div class="progressFill"></div></div>
+        <div class="previewSteps">
+          <div class="previewStep active"><span class="stepNum">1</span><span>مقابلة المتطلبات</span><em>التفاصيل</em></div>
+          <div class="previewStep muted"><span class="stepNum">2</span><span>مخطط المشروع</span><em>لاحقًا</em></div>
+          <div class="previewStep muted"><span class="stepNum">3</span><span>طلبات الأسعار</span><em>لاحقًا</em></div>
+        </div>
+      </article>
+      <div class="floatingCard costCard">
+        <small>نطاق الميزانية</small>
+        <b>يتكيف مع مشروعك</b>
+      </div>
+      <div class="floatingCard supplierCard">
+        <span class="check">✓</span>
+        <div><b>موردون معتمدون</b><small>عروض قابلة للمقارنة</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     القسم الأول: المشكلة
+============================================================ -->
+<section class="problemSection" id="problem">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">المشكلة</span>
+      <h2>افتتاح كافيه أو مطعم ليس مجرد «مشروع»<br>إنه منظومة معقدة، والبداية الصحيحة تصنع الفرق</h2>
+      <p>معظم أصحاب المشاريع يبدأون بحماس كبير… ثم يصطدمون بنفس العقبات التي تحوّل الحلم إلى تأخير وتجاوز ميزانية وإرهاق.</p>
+    </div>
+
+    <div class="painGrid">
+      <article class="painCard reveal">
+        <span class="num">01</span>
+        <div class="painIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+        </div>
+        <h3>أرقام وأسئلة متضاربة</h3>
+        <p>معلومات عن التجهيزات والأسعار مبعثرة بين المهندسين والموردين والبحث العشوائي، وكل جهة تعطيك رقمًا مختلفًا.</p>
+        <span class="tag">تشتت المعلومات</span>
+      </article>
+
+      <article class="painCard reveal">
+        <span class="num">02</span>
+        <div class="painIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>لا يوجد مخطط واضح</h3>
+        <p>بدون مخطط تنفيذي بالكميات والتكاليف الأولية، تبقى الميزانية تخمينًا، وأي تجهيزة منسية تعني تجاوزًا جديدًا.</p>
+        <span class="tag">تقديرات خاطئة</span>
+      </article>
+
+      <article class="painCard reveal">
+        <span class="num">03</span>
+        <div class="painIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg>
+        </div>
+        <h3>عروض لا يمكن مقارنتها</h3>
+        <p>كل مورد يرسل عرضه بصيغته الخاصة؛ مواصفات منقوصة، شحن وضريبة غير موضحة، ومقارنة الفرص شبه مستحيلة.</p>
+        <span class="tag">مقارنة مستحيلة</span>
+      </article>
+
+      <article class="painCard reveal">
+        <span class="num">04</span>
+        <div class="painIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>قرار بحدس… وخطر حقيقي</h3>
+        <p>ترسية المشروع على مورد دون معايير واضحة تعني مخاطر تأخير، جودة غير مضمونة، وتكاليف تظهر بعد فوات الأوان.</p>
+        <span class="tag">قرارات عشوائية</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     القسم الثاني: الحل (قبل / بعد + ركائز)
+============================================================ -->
+<section class="solutionSection" id="solution">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">الحل</span>
+      <h2>نفس الرحلة… لكن بمنصة تُفكّر بمنطق القطاع</h2>
+      <p>منصة التجهيز تحوّل الرحلة العشوائية إلى مسار منظم خطوة بخطوة، مصمم على خبرة حقيقية في الكافيهات والمطاعم والمخابز.</p>
+    </div>
+
+    <div class="compareWrap">
+      <article class="compareCol before reveal">
+        <span class="colBadge">✕ بدون المنصة — الرحلة الشائعة</span>
+        <h3>ماذا يحدث عادة اليوم؟</h3>
+        <p class="colSub">محاولات متفرقة وجهات غير منسقة، وكل معلومة جديدة تكشف معلومة ناقصة.</p>
+        <div class="compareList">
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><div><b>معلومات مبعثرة</b><span>Excel وواتساب ومهام بين العشرات من الجهات.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><div><b>أسئلة عامة</b><span>المنصات العامة لا تعرف فرقًا بين كافيه ومخبز.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><div><b>تقدير بالتقريب</b><span>لا كميات ولا تكاليف أولية مبنية على بيانات.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span><div><b>ترسية بالحدس</b><span>تأخيرات يسأم منها الجميع وتجاوز للميزانية.</span></div></div>
+        </div>
+      </article>
+
+      <article class="compareCol after reveal">
+        <span class="colBadge">✓ مع منصة التجهيز — مسار منظم</span>
+        <h3>كيف تمشي رحلتك معنا؟</h3>
+        <p class="colSub">مسار واحد واضح، من مقابلة احتياج إلى مشروع قابل للترسية.</p>
+        <div class="compareList">
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>كل شيء في مكان واحد</b><span>تجربة مخصصة وموحدة من البداية للنهاية.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>أسئلة تفهم مجال عملك</b><span>تتكيف مع كافيه أو مطعم أو مخبز وإجاباتك.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>مخطط تنفيذي جاهز</b><span>حزم وكميات وتكاليف أولية قابلة للمراجعة.</span></div></div>
+          <div class="compareItem"><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>عروض قابلة للمقارنة</b><span>موردون معتمدون وترسية شفافة.</span></div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ركائز الحل -->
+    <div class="sectionTitle center reveal" style="margin-bottom:44px">
+      <span class="sectionEyebrow">كيف نُصلح ذلك</span>
+      <h2>أربع ركائز تبني عليها قرارك</h2>
+    </div>
+    <div class="pillarsGrid">
+      <article class="pillar reveal">
+        <span class="pillarNum">1</span>
+        <div class="pillarIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>مقابلة متطلبات ذكية</h3>
+        <p>ستة أسئلة مختصرة تتكيف مع نوع مشروعك وكل إجابة تعطيها — دون تسجيل وبطاقة ائتمانية.</p>
+      </article>
+      <article class="pillar reveal">
+        <span class="pillarNum">2</span>
+        <div class="pillarIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/></svg></div>
+        <h3>مخطط تنفيذي شامل</h3>
+        <p>حزم وكميات وتكاليف أولية موحّدة جاهزة للمراجعة — تعرف ماذا تشتري وكم يكلف قبل أن تلتزم.</p>
+      </article>
+      <article class="pillar reveal">
+        <span class="pillarNum">3</span>
+        <div class="pillarIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>طلبات أسعار موحدة</h3>
+        <p>طلب واحد بنفس المواصفات يصل لموردين معتمدين — عروض متجانسة من اللحظة الأولى للمقارنة.</p>
+      </article>
+      <article class="pillar reveal">
+        <span class="pillarNum">4</span>
+        <div class="pillarIcon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+        <h3>مقارنة وترسية شفافة</h3>
+        <p>قارن العروض جنبًا إلى جنب ورسِّ مشروعك بقرار مبني على بيانات ومواصفات واضحة.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     القسم الثالث: الخصائص بالتفصيل
+============================================================ -->
+<section class="featuresSection" id="features">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">الخصائص</span>
+      <h2>مصمّمة لترافقك من القهوة الأولى حتى باب المحل</h2>
+      <p>ستة خصائص تجعل التجهيز قرارًا هندسيًا وماليًا، لا مقامرة.</p>
+    </div>
+
+    <div class="featureGrid">
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <h3>أسئلة تتكيف مع مشروعك<span class="dots">✦✦✦</span></h3>
+        <p>نموذج مخصص لكل قطاع: مسارات الباريستا للكافيهات، المطبخ والصالة للمطاعم، والأفران والإنتاج للمخابز. كل إجابة توجّه السؤال التالي.</p>
+      </article>
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        </div>
+        <h3>مخطط تنفيذي مبني على حزم<span class="dots">✦✦✦</span></h3>
+        <p>ست حزم تنفيذية تغطي الكميات والتكاليف الأولية، بمستويات ميزانية مختلفة، لتقرر بثقة وتعدّل بسهولة.</p>
+      </article>
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>طلبات أسعار موحدة<span class="dots">✦✦✦</span></h3>
+        <p>طلب واحد بنفس المواصفات يصل للجميع: عروض متكافئة تشمل الشحن والضريبة بوضوح، فتصبح المقارنة عادلة وموثوقة.</p>
+      </article>
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>موردون معتمدون<span class="dots">✦✦✦</span></h3>
+        <p>نختار الموردين ونتحقق منهم حسب معايير القطاع، لتستقبل عروضًا جدية فقط — وتوفر وقت البحث وتحقق الجودة.</p>
+      </article>
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        </div>
+        <h3>مقارنة واضحة بين العروض<span class="dots">✦✦✦</span></h3>
+        <p>عرض جنبًا إلى جنب يضع السعر والمواصفات والمدة أمامك، فيتحول قرار القلق إلى قرار رقمي مقروء.</p>
+      </article>
+      <article class="featureCard reveal">
+        <div class="fIcon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>توفير الوقت والحماية من المخاطر<span class="dots">✦✦✦</span></h3>
+        <p>من أسابيع من التواصل المتبعثر إلى أيام من عمل منظم — مع مرجع موحد لكل قرارك ومصروفاتك.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     القسم الرابع: التخصصات القطاعية
+============================================================ -->
+<section class="specialtySection" id="specialties">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">خبرة قطاعية وليست منصة عامة</span>
+      <h2>تجربة مخصصة لكل نوع مشروع</h2>
+      <p>تختلف الأسئلة والمخططات والحزم حسب احتياج التشغيل الحقيقي لكل نشاط — لأن الكافيه ليس المطعم، والمخبز مختلف عنهما.</p>
+    </div>
+
+    <div class="specialtyGrid">
+      <article class="specialtyCard reveal">
+        <div class="specialtyIcon">☕</div>
+        <span>الكافيهات</span>
+        <h3>من البار إلى تجربة الضيف</h3>
+        <p>برنامج القهوة، تدفق عمل الباريستا، معدات التحضير، الجلسات وسرعة الخدمة.</p>
+        <ul class="specList">
+          <li>معدات القهوة والبار</li>
+          <li>الطاقة التشغيلية اليومية</li>
+          <li>الهوية وتجربة العميل</li>
+        </ul>
+      </article>
+      <article class="specialtyCard reveal">
+        <div class="specialtyIcon">🍽</div>
+        <span>المطاعم</span>
+        <h3>المطبخ والصالة كنظام واحد</h3>
+        <p>نوع المطبخ، مسارات التحضير والخدمة، التهوية، الطاقة الاستيعابية والتوصيل.</p>
+        <ul class="specList">
+          <li>تخطيط المطبخ و MEP</li>
+          <li>نموذج الخدمة والصالة</li>
+          <li>التغليف ومسار التوصيل</li>
+        </ul>
+      </article>
+      <article class="specialtyCard reveal">
+        <div class="specialtyIcon">🥐</div>
+        <span>المخابز</span>
+        <h3>الإنتاج والعرض والتغليف</h3>
+        <p>طاقة الأفران، مناطق الإنتاج، التبريد، العرض، التخزين والبيع بالجملة.</p>
+        <ul class="specList">
+          <li>خطوط الإنتاج والأفران</li>
+          <li>التبريد والعرض</li>
+          <li>التغليف وسلامة المنتج</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     القسم الخامس: كيف تعمل (المراحل)
+============================================================ -->
+<section class="stepsSection" id="steps">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">رحلة واضحة</span>
+      <h2>أربع خطوات تفصل بين فكرتك وافتتاحك</h2>
+      <p>مسار واحد أعدّناه ليكون كل ما تحتاجه للتأسيس في مكان واحد — من الفكرة إلى الافتتاح.</p>
+    </div>
+    <div class="stepsGrid">
+      <article class="stepCard reveal">
+        <span class="stepBadge">01</span>
+        <h3>عرّف فكرتك واحتياجك</h3>
+        <p>مقابلة متطلبات ذكية بأسئلة تتكيف مع نوع مشروعك وإجاباتك — وتصحح لك المفاهيم المبكرة.</p>
+      </article>
+      <article class="stepCard reveal">
+        <span class="stepBadge">02</span>
+        <h3>راجع المخطط والميزانية</h3>
+        <p>استلم مخططك التنفيذي بحزم وكميات وتكاليف أولية، راجعه وعدّله قبل أي التزام.</p>
+      </article>
+      <article class="stepCard reveal">
+        <span class="stepBadge">03</span>
+        <h3>استقبل عروض الموردين</h3>
+        <p>نُرسل طلبات أسعار موحدة لموردين معتمدين، وتتلقى عروضًا متجانسة قابلة للمقارنة.</p>
+      </article>
+      <article class="stepCard reveal">
+        <span class="stepBadge">04</span>
+        <h3>قارن ورسِّ المشروع</h3>
+        <p>قارن العروض جنبًا إلى جنب بمعايير واضحة، واتخذ قرار الترسية بثقة كاملة.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== شريط الأرقام ===== -->
+<div class="statsBand">
+  <div class="container statsInner">
+    <div><b>6</b><span>حزم تنفيذية</span></div>
+    <div><b>3</b><span>قطاعات متخصصة</span></div>
+    <div><b>4<span class="plus">✦</span></b><span>خطوات حتى الترسية</span></div>
+    <div><b>منصة واحدة</b><span>لكل مرحلة</span></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     القسم السادس: الأسئلة الشائعة
+============================================================ -->
+<section class="faqSection" id="faq">
+  <div class="container">
+    <div class="sectionTitle center reveal">
+      <span class="sectionEyebrow">أسئلة شائعة</span>
+      <h2>كل ما تريد معرفته قبل أن تبدأ</h2>
+    </div>
+    <div class="faqList">
+      <div class="faqItem reveal">
+        <button class="faqQ">هل أحتاج بطاقة ائتمانية أو تسجيلًا لبدء التخطيط؟
+          <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="faqA"><p>لا. تبدأ بستة أسئلة مختصرة مجانًا ودون تسجيل، وتظهر لك الرؤية الأولية لمشروعك فورًا.</p></div>
+      </div>
+      <div class="faqItem reveal">
+        <button class="faqQ">ماذا لو تغيّرت إجاباتي أو نطاق مشروعي لاحقًا؟
+          <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="faqA"><p>المخطط والحزم تتكيف مع تحديثاتك؛ يمكنك الرجوع وتعديل نطاق الميزانية أو المواصفات، وتتحدث العروض تبعًا لذلك.</p></div>
+      </div>
+      <div class="faqItem reveal">
+        <button class="faqQ">كيف أضمن أن العروض التي أستلمها قابلة للمقارنة حقًا؟
+          <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="faqA"><p>لأن الطلب الواحد يصل للموردين بنفس المواصفات والشروط، وكل عرض يمر بنفس القالب قبل وصوله إليك.</p></div>
+      </div>
+      <div class="faqItem reveal">
+        <button class="faqQ">هل المنصة مخصصة للمشاريع الصغيرة فقط؟
+          <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+        <div class="faqA"><p>المنصة مصممة لأي مشروع في الكافيهات والمطاعم والمخابز — من كشك صغير حتى فروع متعددة، مع حزم تنفيذية بمستويات ميزانية مختلفة.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     الدعوة الأخيرة
+============================================================ -->
+<section class="ctaSection">
+  <div class="container">
+    <div class="ctaCard reveal">
+      <span class="sectionEyebrow" style="color:var(--gold)">ابدأ من هنا</span>
+      <h2>لنكتشف احتياج مشروعك…<br>في ستة أسئلة فقط</h2>
+      <p>ستة أسئلة مختصرة، دون تسجيل أو بطاقة ائتمانية. أجب وستتحول فكرتك إلى مخطط ملموس ينتظر مراجعتك.</p>
+      <a class="btnPrimary" href="#">
+        ابدأ الأسئلة مجانًا
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      </a>
+      <p class="ctaNote">مجانًا • دون تسجيل • دون بطاقة ائتمانية</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== التذييل ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footerGrid">
+      <div>
+        <a class="brand" href="#">
+          <b class="brandTile">ت</b>
+          <span>منصة التجهيز</span>
+        </a>
+        <p>منصة مبنية خصيصًا لقطاع الأغذية والمشروبات؛ من الفكرة الأولى إلى افتتاح ناجح.</p>
+      </div>
+      <div>
+        <h4>استكشف</h4>
+        <div class="footerLinks">
+          <a href="#problem">المشكلة</a>
+          <a href="#solution">الحل</a>
+          <a href="#features">الخصائص</a>
+          <a href="#specialties">تخصصاتنا</a>
+        </div>
+      </div>
+      <div>
+        <h4>ابدأ الآن</h4>
+        <div class="footerLinks">
+          <a href="#">ابدأ تخطيط مشروعك</a>
+          <a href="#">دخول العملاء والموردين</a>
+          <a href="#faq">الأسئلة الشائعة</a>
+        </div>
+      </div>
+    </div>
+    <div class="footerBottom">
+      <span>من الفكرة إلى الافتتاح.</span>
+      <span>مسودة تصميم للاستعراض — 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* أسئلة شائعة */
+  document.querySelectorAll('.faqQ').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.faqItem');
+      var open = item.classList.toggle('open');
+      var ans = item.querySelector('.faqA');
+      ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0';
+    });
+  });
+
+  /* ظهور تدريجي عند التمرير */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>
